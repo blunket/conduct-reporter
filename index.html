@@ -28,6 +28,13 @@
 			document.getElementById("coc-members").innerHTML = html;
 
 		});
+		cr.sendReport({
+			"report": "test",
+			"reporter": "andrew",
+			"contact": "blerrnk@gmail.com"
+		}, function(success) {
+			console.log(success);
+		});
 
 	</script>
 </body>
