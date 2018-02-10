@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Code of Conduct Reporter</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@4.0.0/dist/basicLightbox.min.css">
 </head>
 <body>
 	<h1>Code of Conduct Reporter</h1>
@@ -16,6 +17,8 @@
 	  crossorigin="anonymous"></script>
 
 	<script src="./conduct-reporter.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/basiclightbox@4.0.0/dist/basicLightbox.min.js"></script>
+	<script src="./jquery.conduct-reporter-modal.js"></script>
 	<script>
 		var cr = new ConductReporter('https://devict-coc-api-dev.herokuapp.com/');
 		cr.getMembers(function(members) {
@@ -28,14 +31,20 @@
 			document.getElementById("coc-members").innerHTML = html;
 
 		});
+
+		$(function() {
+			$("a").conductReporter();
+		})
+
+		/*
 		cr.sendReport({
-			"report": "test",
+			// "report": "test",
 			"reporter": "andrew",
-			"contact": "blerrnk@gmail.com"
+			// "contact": "blerrnk@gmail.com"
 		}, function(success) {
 			console.log(success);
 		});
-
+		*/
 	</script>
 </body>
 </html>
