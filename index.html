@@ -27,7 +27,11 @@
 
 		});
 
-		var crm = new ConductReporterModal("a");
+		var crm = new ConductReporterModal("#coc", {
+			labels: {
+				name: "Name"
+			}
+		});
 
 		/*
 		cr.sendReport({
