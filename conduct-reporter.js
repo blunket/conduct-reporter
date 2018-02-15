@@ -19,6 +19,7 @@ class ConductReporter {
 				"name": "Your name",
 				"contact": "Your contact info (slack, email, etc.)",
 				"message": "What happened?",
+				"submit": "Send Report"
 			},
 			"wrapper_class": "conduct-reporter-modal",
 		}
@@ -83,20 +84,27 @@ class ConductReporter {
 			<div class='` + cr.options.wrapper_class + `' id='conduct-reporter-modal'>
 			<form action="">
 				<div class="conduct-reporter-question">
-					<label for="name">` + cr.options.labels.name + `</label>
+					<label for="conduct-reporter-name">` + cr.options.labels.name + `</label>
 					<input type="text" id="conduct-reporter-name" name="name" />
 				</div>
 				<div class="conduct-reporter-question">
-					<label for="contact">` + cr.options.labels.contact + `</label>
+					<label for="conduct-reporter-contact">` + cr.options.labels.contact + `</label>
 					<input type="text" id="conduct-reporter-contact" name="contact" />
 				</div>
 				<div class="conduct-reporter-question">
-					<label for="message">` + cr.options.labels.message + `</label>
+					<label for="conduct-reporter-message">` + cr.options.labels.message + `</label>
 					<textarea id="conduct-reporter-message" name="message"></textarea>
+				</div>
+				<div class="conduct-reporter-submit">
+					<input type="submit" value="` + cr.options.labels.submit + `">
 				</div>
 			</form>
 			</div>
-		`);
+		`, {
+			afterShow: function() {
+				document.getElementById("conduct-reporter-name").focus();
+			}
+		});
 		modal.show();
 	}
 

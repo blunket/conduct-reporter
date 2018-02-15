@@ -1,7 +1,60 @@
+#conduct-reporter-modal,
+#conduct-reporter-modal * {
+	box-sizing: border-box;
+}
 #conduct-reporter-modal {
 	background-color: #fff;
-	padding: 10px;
+	padding: 15px;
+	width: 50vw;
 }
-#conduct-reporter-modal .conduct-reporter-question {
+@media (max-width: 700px) {
+	#conduct-reporter-modal {
+		width: 90vw;
+	}
+}
 
+#conduct-reporter-modal .conduct-reporter-question label {
+	display: block;
+	font-family: sans-serif;
+}
+#conduct-reporter-modal .conduct-reporter-question input[type="text"],
+#conduct-reporter-modal .conduct-reporter-question textarea {
+	display: block;
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #888;
+	transition: border .2s;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+#conduct-reporter-modal .conduct-reporter-question textarea {
+	resize: vertical;
+	height: 200px;
+	min-height: 50px;
+	max-height: 300px;
+}
+#conduct-reporter-modal .conduct-reporter-question input[type="text"]:focus,
+#conduct-reporter-modal .conduct-reporter-question textarea:focus {
+	outline: none;
+	border: 1px solid #42a5f5;
+}
+#conduct-reporter-modal .conduct-reporter-submit {
+	text-align: right;
+}
+#conduct-reporter-modal .conduct-reporter-submit input {
+	display: inline-block;
+	outline: none;
+	border: 1px solid #2196f3;
+	background-color: #2196f3;
+	padding: 10px 20px;
+	border-radius: 3px;
+	font-family: sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	transition: background-color .2s;
+}
+#conduct-reporter-modal .conduct-reporter-submit input:hover,
+#conduct-reporter-modal .conduct-reporter-submit input:focus {
+	background-color: #42a5f5;
 }
