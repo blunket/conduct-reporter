@@ -1,6 +1,6 @@
 # Code of Conduct Reporter
 
-This Code of Conduct Reporter JavaScript plugin is a simple plugin that allows interfacing with an instance of devICT's Code of Conduct Slack reporter.
+This Code of Conduct Reporter JavaScript plugin is a simple plugin that allows interfacing with an instance of devICT's Code of Conduct Slack reporter. Also included is an optional modal popup plugin, which can be bound to a link to allow users to make reports easily.
 
 ## Synopsis
 
@@ -24,4 +24,15 @@ cr.sendReport({
 		// do something
 	}
 })
+```
+
+## Installation
+
+No dependencies are required to use the basic features of the ConductReporter plugin. If you intend to use the included modal popup feature, however, the [basicLightbox](https://github.com/electerious/basicLightbox) plugin is required.
+
+Basic example (CSS and JS):
+
+```html
+<link rel="stylesheet" href="conduct-reporter.css">
+<script src="conduct-reporter.js"></script>
 ```
