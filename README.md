@@ -30,9 +30,69 @@ cr.sendReport({
 
 No dependencies are required to use the basic features of the ConductReporter plugin. If you intend to use the included modal popup feature, however, the [basicLightbox](https://github.com/electerious/basicLightbox) plugin is required.
 
-Basic example (CSS and JS):
+### Basic functionality
 
 ```html
-<link rel="stylesheet" href="conduct-reporter.css">
 <script src="conduct-reporter.js"></script>
 ```
+
+At this point you have all you need to use the basic features of the plugin. You can use both the `getMembers` and `sendReport` methods.
+
+### Modal included
+
+Include CSS and JS for [basicLightbox](https://github.com/electerious/basicLightbox). Also include conduct-reporter JS/CSS files. (hint: you can leave out the conduct-reporter CSS if you want to define your own styles for the modal)
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@4.0.0/dist/basicLightbox.min.css">
+<link rel="stylesheet" href="conduct-reporter.css">
+
+<script src="https://cdn.jsdelivr.net/npm/basiclightbox@4.0.0/dist/basicLightbox.min.js"></script>
+<script src="conduct-reporter.js"></script>
+```
+
+You are now ready to use all the features of the plugin!
+
+## Usage
+
+### Constructor
+
+The constructor function accepts 1 to 3 parameters.
+
+```javascript
+new ConductReporter(server)
+new ConductReporter(server [, selector [, options]])
+```
+
+**Parameters**
+
+`server`
+
+URL path to an instance of devICT's Code of Conduct Slack reporter.
+
+`selector`
+
+Element query selector. If using the modal plugin, the matching elements will trigger the modal when clicked.
+
+`options`
+
+Options object for the modal plugin. Any defaults may be overridden. It is structured as follows:
+
+```json
+{
+	"labels": {
+		"name": "Your name",
+		"contact": "Your contact info (slack, email, etc.)",
+		"message": "What happened?",
+		"submit": "Send Report"
+	},
+	"wrapper_class": "conduct-reporter-modal",
+}
+```
+
+### Methods
+
+The ConductReporter object has two *basic* methods.
+
+`ConductReporter.getMembers()`
+
+`ConductReporter.sendReport()`
