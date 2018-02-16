@@ -1,24 +1,37 @@
-#conduct-reporter-modal,
-#conduct-reporter-modal * {
+#cr-modal,
+#cr-modal * {
 	box-sizing: border-box;
 }
-#conduct-reporter-modal {
+#cr-modal {
 	background-color: #fff;
 	padding: 15px;
 	width: 50vw;
+	border-radius: 3px;
 }
-@media (max-width: 700px) {
-	#conduct-reporter-modal {
+@media (max-width: 767px) {
+	#cr-modal {
 		width: 90vw;
 	}
 }
 
-#conduct-reporter-modal .conduct-reporter-question label {
+#cr-modal .cr-modal-title {
+	font-size: 18px;
+	font-weight: 700;
+	margin: 0px 0px 10px;
+	border-bottom: 1px solid #888;
+}
+
+#cr-modal p {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#cr-modal .cr-question label {
 	display: block;
 	font-family: sans-serif;
 }
-#conduct-reporter-modal .conduct-reporter-question input[type="text"],
-#conduct-reporter-modal .conduct-reporter-question textarea {
+#cr-modal .cr-question input[type="text"],
+#cr-modal .cr-question textarea {
 	display: block;
 	width: 100%;
 	padding: 5px;
@@ -27,21 +40,22 @@
 	border-radius: 3px;
 	margin-bottom: 10px;
 }
-#conduct-reporter-modal .conduct-reporter-question textarea {
+#cr-modal .cr-question textarea {
 	resize: vertical;
-	height: 200px;
+	height: 125px;
 	min-height: 50px;
-	max-height: 300px;
+	max-height: 200px;
 }
-#conduct-reporter-modal .conduct-reporter-question input[type="text"]:focus,
-#conduct-reporter-modal .conduct-reporter-question textarea:focus {
+#cr-modal .cr-question input[type="text"]:focus,
+#cr-modal .cr-question textarea:focus {
 	outline: none;
 	border: 1px solid #42a5f5;
 }
-#conduct-reporter-modal .conduct-reporter-submit {
+#cr-modal .cr-submit {
 	text-align: right;
 }
-#conduct-reporter-modal .conduct-reporter-submit input {
+#cr-modal .cr-submit input {
+	cursor: pointer;
 	display: inline-block;
 	outline: none;
 	border: 1px solid #2196f3;
@@ -54,7 +68,37 @@
 	color: #fff;
 	transition: background-color .2s;
 }
-#conduct-reporter-modal .conduct-reporter-submit input:hover,
-#conduct-reporter-modal .conduct-reporter-submit input:focus {
+#cr-modal .cr-submit input:hover,
+#cr-modal .cr-submit input:focus {
 	background-color: #42a5f5;
+}
+
+#cr-modal form {
+	clear: both;
+}
+
+#cr-modal .cr-member-list {
+	margin-bottom: 10px;
+}
+
+#cr-modal .cr-member {
+	clear: both;
+	margin-bottom: 8px;
+	height: 20px;
+}
+
+#cr-modal .cr-member-name,
+#cr-modal .cr-member-username {
+	height: 20px;
+	line-height: 20px;
+	display: inline-block;
+	float: left;
+	margin-left: 5px;
+	font-size: 12px;
+}
+#cr-modal .cr-member-avatar {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	float: left;
 }

@@ -16,12 +16,14 @@ class ConductReporter {
 
 		var modalDefaults = {
 			"labels": {
+				"modal_title": "Report an Incident",
 				"name": "Your name",
 				"contact": "Your contact info (slack, email, etc.)",
 				"message": "What happened?",
-				"submit": "Send Report"
+				"submit": "Send Report",
+				"members_description": "Your report will be sent to the following people.",
 			},
-			"wrapper_class": "conduct-reporter-modal",
+			"wrapper_class": "cr-modal",
 		}
 		this.options = cr.__extend(true, modalDefaults, modalOptions);
 
@@ -80,32 +82,51 @@ class ConductReporter {
 	// showModal uses the basicLightbox plugin to create a modal popup with form
 	showModal() {
 		var cr = this;
-		var modal = basicLightbox.create(`
-			<div class='` + cr.options.wrapper_class + `' id='conduct-reporter-modal'>
-			<form action="">
-				<div class="conduct-reporter-question">
-					<label for="conduct-reporter-name">` + cr.options.labels.name + `</label>
-					<input type="text" id="conduct-reporter-name" name="name" />
-				</div>
-				<div class="conduct-reporter-question">
-					<label for="conduct-reporter-contact">` + cr.options.labels.contact + `</label>
-					<input type="text" id="conduct-reporter-contact" name="contact" />
-				</div>
-				<div class="conduct-reporter-question">
-					<label for="conduct-reporter-message">` + cr.options.labels.message + `</label>
-					<textarea id="conduct-reporter-message" name="message"></textarea>
-				</div>
-				<div class="conduct-reporter-submit">
-					<input type="submit" value="` + cr.options.labels.submit + `">
-				</div>
-			</form>
-			</div>
-		`, {
-			afterShow: function() {
-				document.getElementById("conduct-reporter-name").focus();
+		cr.getMembers(function(members) {
+			var membersHtml = '';
+			for (var i = 0; i < members.length; i++) {
+				let member = members[i]
+				membersHtml += `
+					<div class="cr-member">
+						<img class="cr-member-avatar" src="` + member.avatar + `" alt="` + member.name + `">
+						<span class="cr-member-name">` + member.name + `</span>
+						<span class="cr-member-username">(@` + member.username + `)</span>
+					</div>
+				`;
 			}
+
+			var modal = basicLightbox.create(`
+				<div class='` + cr.options.wrapper_class + `' id='cr-modal'>
+				<h1 class="cr-modal-title">` + cr.options.labels.modal_title + `</h1>
+				<div class="cr-member-list">
+					<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
+					<div class="cr-members">` + membersHtml + `</div>
+				</div>
+				<form action="">
+					<div class="cr-question">
+						<label for="cr-name">` + cr.options.labels.name + `</label>
+						<input type="text" id="cr-name" name="name" />
+					</div>
+					<div class="cr-question">
+						<label for="cr-contact">` + cr.options.labels.contact + `</label>
+						<input type="text" id="cr-contact" name="contact" />
+					</div>
+					<div class="cr-question">
+						<label for="cr-message">` + cr.options.labels.message + `</label>
+						<textarea id="cr-message" name="message"></textarea>
+					</div>
+					<div class="cr-submit">
+						<input type="submit" value="` + cr.options.labels.submit + `">
+					</div>
+				</form>
+				</div>
+			`, {
+				afterShow: function() {
+					document.getElementById("cr-name").focus();
+				}
+			});
+			modal.show();
 		});
-		modal.show();
 	}
 
 	// source: https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
