@@ -102,7 +102,7 @@ class ConductReporter {
 					<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
 					<div class="cr-members">` + membersHtml + `</div>
 				</div>
-				<form action="">
+				<form action="" id="cr-modal-form">
 					<div class="cr-question">
 						<label for="cr-name">` + cr.options.labels.name + `</label>
 						<input type="text" id="cr-name" name="name" />
@@ -122,11 +122,15 @@ class ConductReporter {
 				</div>
 			`, {
 				afterShow: function() {
-					document.getElementById("cr-name").focus();
+					cr.__formInit();
 				}
 			});
 			modal.show();
 		});
+	}
+
+	__formInit() {
+		document.getElementById("cr-name").focus();
 	}
 
 	// source: https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
