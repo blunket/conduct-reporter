@@ -140,7 +140,11 @@ class ConductReporter {
 		}
 		document.getElementById("cr-modal-form").onsubmit = function(e) {
 			e.preventDefault();
-
+			cr.sendReport({
+				"reporter": document.getElementById("cr-name").value,
+				"contact": document.getElementById("cr-contact").value,
+				"report": document.getElementById("cr-message").value
+			})
 		}
 	}
 
