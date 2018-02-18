@@ -8,11 +8,6 @@
 	width: 50vw;
 	border-radius: 3px;
 }
-@media (max-width: 767px) {
-	#cr-modal {
-		width: 90vw;
-	}
-}
 
 #cr-modal .cr-modal-title {
 	font-size: 18px;
@@ -51,54 +46,103 @@
 	outline: none;
 	border: 1px solid #42a5f5;
 }
-#cr-modal .cr-submit {
+#cr-modal .cr-buttons {
 	text-align: right;
 }
-#cr-modal .cr-submit input {
+#cr-modal .cr-buttons input {
 	cursor: pointer;
 	display: inline-block;
 	outline: none;
-	border: 1px solid #2196f3;
-	background-color: #2196f3;
 	padding: 10px 20px;
 	border-radius: 3px;
 	font-family: sans-serif;
 	font-size: 14px;
 	font-weight: 700;
-	color: #fff;
 	transition: background-color .2s;
 }
-#cr-modal .cr-submit input:hover,
-#cr-modal .cr-submit input:focus {
+#cr-modal .cr-submit {
+	border: 1px solid #2196f3;
+	background-color: #2196f3;
+	color: #fff;
+}
+#cr-modal .cr-submit:hover,
+#cr-modal .cr-submit:focus {
 	background-color: #42a5f5;
+	box-shadow: 0px 0px 5px #2196f3;
+}
+#cr-modal .cr-cancel {
+	border: 1px solid #666;
+	background-color: #f8f8f8;
+	color: #333;
+}
+#cr-modal .cr-cancel:hover,
+#cr-modal .cr-cancel:focus {
+	background-color: #e8e8e8;
+	box-shadow: 0px 0px 5px #666;
+}
+@media (max-width: 767px) {
+	#cr-modal {
+		width: 90vw;
+	}
+	#cr-modal .cr-buttons input {
+		padding: 10px;
+	}
 }
 
 #cr-modal form {
 	clear: both;
 }
 
+#cr-modal ul,
+#cr-modal li {
+	list-style: none;
+	padding: 0px;
+	margin-left: 0px;
+}
 #cr-modal .cr-member-list {
 	margin-bottom: 10px;
+	font-size: 12px;
 }
 
 #cr-modal .cr-member {
-	clear: both;
 	margin-bottom: 8px;
 	height: 20px;
+	display: inline-block;
+	margin-right: 10px;
 }
 
-#cr-modal .cr-member-name,
 #cr-modal .cr-member-username {
 	height: 20px;
 	line-height: 20px;
 	display: inline-block;
 	float: left;
 	margin-left: 5px;
-	font-size: 12px;
 }
 #cr-modal .cr-member-avatar {
 	width: 20px;
 	height: 20px;
 	display: inline-block;
 	float: left;
+}
+#cr-modal .cr-members-comma {
+	display: none;
+}
+
+@media (max-width: 480px) {
+	#cr-modal .cr-member-avatar {
+		display: none;
+		height: auto;
+	}
+	#cr-modal .cr-member-username {
+		margin: 0px;
+		padding: 0px;
+		height: auto;
+	}
+	#cr-modal .cr-member {
+		margin: 0px;
+		height: auto;
+	}
+	#cr-modal .cr-member:not(:last-child) .cr-member-username:after {
+		content: ", ";
+	}
 }

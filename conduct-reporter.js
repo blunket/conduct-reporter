@@ -21,11 +21,13 @@ class ConductReporter {
 				"contact": "Your contact info (slack, email, etc.)",
 				"message": "What happened?",
 				"submit": "Send Report",
-				"members_description": "Your report will be sent to the following people.",
+				"cancel": "Cancel",
+				"members_description": "Your report will be sent to the following people:",
 			},
 			"wrapper_class": "cr-modal",
 		}
 		this.options = cr.__extend(true, modalDefaults, modalOptions);
+		this.modal = false;
 
 		document.querySelectorAll(el).forEach(function(el, i) {
 			el.addEventListener("click", function(e) {
@@ -84,39 +86,40 @@ class ConductReporter {
 		var cr = this;
 		cr.getMembers(function(members) {
 			var membersHtml = '';
+
 			for (var i = 0; i < members.length; i++) {
 				let member = members[i]
 				membersHtml += `
-					<div class="cr-member">
+					<li class="cr-member">
 						<img class="cr-member-avatar" src="` + member.avatar + `" alt="` + member.name + `">
-						<span class="cr-member-name">` + member.name + `</span>
-						<span class="cr-member-username">(@` + member.username + `)</span>
-					</div>
+						<span class="cr-member-username">@` + member.username + `</span>
+					</li>
 				`;
 			}
 
-			var modal = basicLightbox.create(`
+			cr.modal = basicLightbox.create(`
 				<div class='` + cr.options.wrapper_class + `' id='cr-modal'>
 				<h1 class="cr-modal-title">` + cr.options.labels.modal_title + `</h1>
+				<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
 				<div class="cr-member-list">
-					<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
-					<div class="cr-members">` + membersHtml + `</div>
+					<ul class="cr-members">` + membersHtml + `</ul>
 				</div>
 				<form action="" id="cr-modal-form">
 					<div class="cr-question">
 						<label for="cr-name">` + cr.options.labels.name + `</label>
-						<input type="text" id="cr-name" name="name" />
+						<input tabindex="1" type="text" id="cr-name" name="name" />
 					</div>
 					<div class="cr-question">
 						<label for="cr-contact">` + cr.options.labels.contact + `</label>
-						<input type="text" id="cr-contact" name="contact" />
+						<input tabindex="2" type="text" id="cr-contact" name="contact" />
 					</div>
 					<div class="cr-question">
 						<label for="cr-message">` + cr.options.labels.message + `</label>
-						<textarea id="cr-message" name="message"></textarea>
+						<textarea tabindex="3" id="cr-message" name="message"></textarea>
 					</div>
-					<div class="cr-submit">
-						<input type="submit" value="` + cr.options.labels.submit + `">
+					<div class="cr-buttons">
+						<input tabindex="5" type="button" class="cr-cancel" value="` + cr.options.labels.cancel + `">
+						<input tabindex="4" type="submit" class="cr-submit" value="` + cr.options.labels.submit + `">
 					</div>
 				</form>
 				</div>
@@ -125,12 +128,20 @@ class ConductReporter {
 					cr.__formInit();
 				}
 			});
-			modal.show();
+			cr.modal.show();
 		});
 	}
 
 	__formInit() {
+		var cr = this;
 		document.getElementById("cr-name").focus();
+		document.getElementsByClassName("cr-cancel")[0].onclick = function() {
+			cr.modal.close();
+		}
+		document.getElementById("cr-modal-form").onsubmit = function(e) {
+			e.preventDefault();
+
+		}
 	}
 
 	// source: https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
