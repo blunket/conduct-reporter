@@ -59,7 +59,8 @@ class ConductReporter {
 	}
 
 	// sendReport performs a POST to the /report endpoint and passes
-	// true to the callback upon success, or false upon failure
+	// true to the callback upon success, or false upon failure.
+	// also passes the XHR status code to the callback.
 	sendReport(data, callback) {
 		var cr = this;
 		var xhr = new XMLHttpRequest();

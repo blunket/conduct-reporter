@@ -1,3 +1,4 @@
+
 # Code of Conduct Reporter
 
 This Code of Conduct Reporter JavaScript plugin is a simple plugin that allows interfacing with an instance of devICT's Code of Conduct Slack reporter. Also included is an optional modal popup plugin, which can be bound to a link to allow users to make reports easily.
@@ -91,8 +92,57 @@ Options object for the modal plugin. Any defaults may be overridden. It is struc
 
 ### Methods
 
-The ConductReporter object has two *basic* methods.
+`.getMembers()`
 
-`ConductReporter.getMembers()`
+The `.getMembers()` method performs a GET request to the /members endpoint and passes the response as an argument to a callback function as an array of objects. These are the active members in the channel to which the report will be made. Each object contains a `name`, a `username`, and an `avatar` property (user data from Slack).
 
-`ConductReporter.sendReport()`
+Example usage:
+
+```javascript
+cr.getMembers(function(members) {
+	var membersHtml = '';
+
+	for (var i = 0; i < members.length; i++) {
+		let member = members[i];
+		membersHtml += `
+			<li class="cr-member">
+				<img class="cr-member-avatar" src="` + member.avatar + `" alt="` + member.name + `">
+				<span class="cr-member-username">@` + member.username + `</span>
+			</li>
+		`;
+	}
+
+	document.getElementById("#memberList").innerHTML = membersHtml;
+})
+```
+
+`.sendReport()`
+
+The `.sendReport()` method performs a POST request to the /report endpoint. It requires at least the first of two arguments: `data`, `callback`.
+
+The `data` argument should be an object with three properties:
+
+* `report` - The message of what happened. This is required.
+* `reporter` - Optional name of the person filing the report.
+* `contact` - Optional contact details.
+
+It passes two arguments to a callback function:
+
+* `success` (bool) - Whether the report was successfully sent.
+* `status` (int) - The HTTP status returned by the API.
+
+Example usage:
+
+```javascript
+cr.sendReport({
+	report: "Something happened",
+	reporter: "Andrew"
+	contact: "@blunket (on slack)"
+}, function(success, status) {
+	if (success) {
+		// yay!
+	} else {
+		console.log(status);
+	}
+})
+```
