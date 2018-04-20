@@ -25,6 +25,7 @@ class ConductReporter {
 				"members_description": "Your report will be sent to the following people:",
 			},
 			"wrapper_class": "cr-modal",
+			"show_users": true
 		}
 		this.options = cr.__extend(true, modalDefaults, modalOptions);
 		this.modal = false;
@@ -64,16 +65,8 @@ class ConductReporter {
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
-				if (xhr.status != 201 && xhr.status != 400) {
-					throw new Error("ConductReport.sendReport: Server responded with unexpected status code");
-				} else {
-					if (typeof callback === 'function') {
-						if (xhr.status == 201) {
-							callback(true);
-						} else if (xhr.status == 400) {
-							callback(false);
-						}
-					}
+				if (typeof callback === 'function') {
+					callback(xhr.status == 201, xhr.status);
 				}
 			}
 		}
@@ -97,13 +90,19 @@ class ConductReporter {
 				`;
 			}
 
-			cr.modal = basicLightbox.create(`
+			var modalHtml = `
 				<div class='` + cr.options.wrapper_class + `' id='cr-modal'>
 				<h1 class="cr-modal-title">` + cr.options.labels.modal_title + `</h1>
-				<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
-				<div class="cr-member-list">
-					<ul class="cr-members">` + membersHtml + `</ul>
-				</div>
+			`;
+			if (cr.options.show_users) {
+				modalHtml += `
+					<p class="cr-members-description">` + cr.options.labels.members_description + `</p>
+					<div class="cr-member-list">
+						<ul class="cr-members">` + membersHtml + `</ul>
+					</div>
+				`;
+			}
+			modalHtml += `
 				<form action="" id="cr-modal-form">
 					<div class="cr-question">
 						<label for="cr-name">` + cr.options.labels.name + `</label>
@@ -123,7 +122,8 @@ class ConductReporter {
 					</div>
 				</form>
 				</div>
-			`, {
+			`;
+			cr.modal = basicLightbox.create(modalHtml, {
 				afterShow: function() {
 					cr.__formInit();
 				}
@@ -144,7 +144,9 @@ class ConductReporter {
 				"reporter": document.getElementById("cr-name").value,
 				"contact": document.getElementById("cr-contact").value,
 				"report": document.getElementById("cr-message").value
-			})
+			}, function(success, status) {
+				console.log(success, status);
+			});
 		}
 	}
 
