@@ -1,0 +1,15 @@
+{
+  "name": "conduct-reporter",
+  "version": "1.0.0",
+  "author": "Andrew Siegman",
+  "license": "MIT",
+  "description": "Allows interfacing with an instance of devICT's Code of Conduct incident reporting API.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blunket/conduct-reporter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blunket/conduct-reporter/issues"
+  },
+  "homepage": "https://github.com/blunket/conduct-reporter#readme"
+}
