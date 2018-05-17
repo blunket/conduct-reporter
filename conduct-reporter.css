@@ -1,8 +1,8 @@
-#cr-modal,
-#cr-modal * {
+.cr-modal,
+.cr-modal * {
 	box-sizing: border-box;
 }
-#cr-modal {
+.cr-modal {
 	background-color: #fff;
 	padding: 15px;
 	width: 50vw;

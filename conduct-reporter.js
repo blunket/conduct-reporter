@@ -17,8 +17,8 @@ class ConductReporter {
 		var modalDefaults = {
 			"labels": {
 				"modal_title": "Report an Incident",
-				"name": "Your name",
-				"contact": "Your contact info (slack, email, etc.)",
+				"name": "Your name (optional)",
+				"contact": "Contact info (slack, email, etc.) (optional)",
 				"message": "What happened?",
 				"submit": "Send Report",
 				"cancel": "Cancel",
@@ -115,7 +115,7 @@ class ConductReporter {
 					</div>
 					<div class="cr-question">
 						<label for="cr-message">` + cr.options.labels.message + `</label>
-						<textarea tabindex="3" id="cr-message" name="message"></textarea>
+						<textarea tabindex="3" id="cr-message" name="message" required></textarea>
 					</div>
 					<div class="cr-buttons">
 						<input tabindex="5" type="button" class="cr-cancel" value="` + cr.options.labels.cancel + `">
@@ -141,12 +141,40 @@ class ConductReporter {
 		}
 		document.getElementById("cr-modal-form").onsubmit = function(e) {
 			e.preventDefault();
+			var msg = document.getElementById("cr-message").value;
+			if (msg === "") {
+				alert("Report field is required")
+				return;
+			}
+
+			// Disable form elements before submitting.
+			document.getElementById("cr-name").setAttribute("disabled", "disabled");
+			document.getElementById("cr-contact").setAttribute("disabled", "disabled");
+			document.getElementById("cr-message").setAttribute("disabled", "disabled");
+			document.getElementsByClassName("cr-submit")[0].setAttribute("disabled", "disabled");
+			document.getElementsByClassName("cr-submit")[0].value = "Processing...";
+
+			// Show a spinner.
 			cr.sendReport({
 				"reporter": document.getElementById("cr-name").value,
 				"contact": document.getElementById("cr-contact").value,
-				"report": document.getElementById("cr-message").value
+				"report": msg
 			}, function(success, status) {
-				console.log(success, status);
+				if (success) {
+					// Show a thank you message.
+					cr.modal.close();
+					var successHtml = `<div class='` + cr.options.wrapper_class + `'><p>Thank you for your report. If you provided contact details someone will reach out soon.</p>`;
+					basicLightbox.create(successHtml, {}).show();
+				} else {
+					// Reenable the form and show an error
+					document.getElementById("cr-name").removeAttribute("disabled");
+					document.getElementById("cr-contact").removeAttribute("disabled");
+					document.getElementById("cr-message").removeAttribute("disabled");
+					document.getElementsByClassName("cr-submit")[0].removeAttribute("disabled");
+					document.getElementsByClassName("cr-submit")[0].value = "Send Report";
+
+					alert("Something went wrong. API responded " + status);
+				}
 			});
 		}
 	}
